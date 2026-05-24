@@ -54,19 +54,66 @@ fix: 完了済みタスクが削除できないバグを修正
 - `.env` などの機密情報を含むファイルは絶対にコミットしない
 - `.gitignore` に `node_modules/`, `*.env`, `__pycache__/`, `.venv/` を必ず含める
 
+## 技術スタック
+
+| 用途 | 技術 |
+|---|---|
+| UIライブラリ | React 18 |
+| ビルドツール | Vite 5 |
+| 言語 | JavaScript (JSX) |
+| スタイリング | CSS（単一ファイル `App.css`） |
+| 状態管理 | React組み込み `useState` / `useEffect` |
+| データ永続化 | `localStorage` |
+| パッケージ管理 | npm |
+
+## コンポーネント命名規約
+
+- **ファイル名・コンポーネント名**: PascalCase（例: `App.jsx`, `TaskItem.jsx`）
+- **関数・変数**: camelCase（例: `addTask`, `toggleTask`）
+- **CSSクラス**: kebab-case（例: `task-item`, `add-button`）
+- **localStorageキー**: kebab-case（例: `task-board-tasks`）
+- コンポーネントは1ファイル1コンポーネントを基本とする
+- コンポーネントファイルは `src/` 直下に配置（規模拡大時は `src/components/` へ移行）
+
+## デプロイ先
+
+- **本番URL**: https://inatangg.github.io/task-board/
+- **ホスティング**: GitHub Pages
+- **ベースパス**: `/task-board/`（`vite.config.js` の `base` に設定済み）
+
+### デプロイ手順
+
+```bash
+npm run build
+# dist/ フォルダの内容を gh-pages ブランチにプッシュ
+```
+
+または `gh-pages` パッケージを使う場合:
+
+```bash
+npm install --save-dev gh-pages
+# package.json の scripts に追加:
+# "deploy": "gh-pages -d dist"
+npm run build && npm run deploy
+```
+
 ## コーディング規則
 
 - コメントは最小限に。「なぜ」が自明でない場合のみ記述する
 - 不要な抽象化・早期最適化は避ける
 - セキュリティ: SQLインジェクション、XSS等のOWASP Top 10に注意する
 
-## ディレクトリ構成（予定）
+## ディレクトリ構成
 
 ```
 task-board/
 ├── CLAUDE.md
 ├── .gitignore
-├── README.md (任意)
-├── frontend/       # フロントエンド（React等）
-└── backend/        # バックエンドAPI（Node.js / Python等）
+├── index.html
+├── package.json
+├── vite.config.js
+└── src/
+    ├── main.jsx
+    ├── App.jsx
+    └── App.css
 ```
